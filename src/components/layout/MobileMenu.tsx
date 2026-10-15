@@ -13,7 +13,7 @@ export function MobileMenu() {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    const onResize = () => window.innerWidth >= 1024 && setOpen(false);
+    const onResize = () => window.innerWidth >= 1280 && setOpen(false);
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
@@ -23,7 +23,7 @@ export function MobileMenu() {
   }, [open]);
 
   return (
-    <div className="lg:hidden">
+    <div className="xl:hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -40,7 +40,7 @@ export function MobileMenu() {
         hidden={!open}
         className="absolute inset-x-0 top-full border-b border-line bg-white shadow-lg shadow-navy/5"
       >
-        <nav aria-label="Menu" className="mx-auto max-w-6xl px-4 pb-5 pt-2 sm:px-6">
+        <nav aria-label="Menu" className="mx-auto max-w-7xl px-4 pb-5 pt-2 sm:px-6 lg:px-10">
           <ul className="divide-y divide-line">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
@@ -63,7 +63,7 @@ export function MobileMenu() {
             }}
             className={buttonClasses({ variant: "primary", size: "lg", className: "mt-4 w-full" })}
           >
-            Solicitar orçamento
+            Pedir orçamento
           </button>
         </nav>
       </div>

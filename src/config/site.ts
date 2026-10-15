@@ -10,25 +10,45 @@ export const siteConfig = {
   locale: "pt_BR",
   title: "Ar-condicionado em Barueri e Alphaville | Clima Norte",
   description:
-    "Instalação, manutenção e higienização de ar-condicionado para residências e empresas em Barueri, Alphaville, Tamboré e Santana de Parnaíba. Solicite seu orçamento.",
+    "Instalação, manutenção e higienização de ar-condicionado para residências e empresas em Barueri, Alphaville e região oeste de São Paulo. Orçamento claro pelo WhatsApp.",
 
   /** Projeto conceito: mantém o aviso no rodapé e bloqueia indexação. */
   isConcept: true,
   indexable: false,
 
+  /**
+   * WhatsApp do projeto conceito: os contatos chegam à Velotiza, não a uma empresa real.
+   * Formato do número: 55 + DDD + número, só dígitos.
+   */
   whatsapp: {
-    /** Número fictício (DDD 00 não existe). Formato: 55 + DDD + número, só dígitos. */
-    number: "5500000000000",
-    defaultMessage:
-      "Olá! Vim pelo site da Clima Norte e gostaria de solicitar um orçamento.",
+    number: "5511962652362",
+    /** Abertura de todas as mensagens: identifica o site demonstrativo e a agência. */
+    intro: "Olá! Vim pelo site demonstrativo da Clima Norte Ar-Condicionado, desenvolvido pela Velotiza.",
+    /** Mensagem dos CTAs diretos (botão flutuante, rodapé, CTA final). */
+    defaultBody:
+      "Estou testando o atendimento pelo site e gostaria de falar sobre um projeto parecido para o meu negócio.",
+    /** Linhas que envolvem os dados dos fluxos com formulário. */
+    formLead: "Estou testando o atendimento deste projeto conceito.",
+    formClosing: "Gostaria de saber mais sobre como ter algo parecido no meu negócio.",
   },
 
-  serviceArea: ["Barueri", "Alphaville", "Santana de Parnaíba", "Tamboré"],
+  serviceArea: [
+    "Barueri",
+    "Alphaville",
+    "Santana de Parnaíba",
+    "Tamboré",
+    "Osasco",
+    "Carapicuíba",
+    "Jandira",
+    "Itapevi",
+  ],
 
   nav: [
     { label: "Serviços", href: "#servicos" },
+    { label: "Diagnóstico", href: "#diagnostico" },
+    { label: "Estimativa", href: "#estimativa" },
     { label: "Como funciona", href: "#como-funciona" },
-    { label: "Regiões", href: "#regioes" },
+    { label: "Região", href: "#regiao" },
     { label: "FAQ", href: "#faq" },
   ],
 

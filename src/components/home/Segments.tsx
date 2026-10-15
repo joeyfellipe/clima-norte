@@ -1,76 +1,78 @@
 import { segments } from "@/content/home";
+import { photos } from "@/content/photos";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
+import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { buttonClasses } from "@/components/ui/button";
 import { QuoteButton } from "@/components/quote/QuoteButton";
 
-export function Segments() {
+function Places({ items, dark = false }: { items: readonly string[]; dark?: boolean }) {
   return (
-    <section id="residencial-comercial" aria-labelledby="segmentos-title" className="bg-white py-16 sm:py-20 lg:py-24">
+    <ul className={`mt-8 grid grid-cols-2 border-t text-[0.9375rem] font-semibold ${dark ? "border-white/15" : "border-navy/10"}`}>
+      {items.map((place) => (
+        <li key={place} className={`flex items-center gap-2.5 border-b py-3 ${dark ? "border-white/15" : "border-navy/10"}`}>
+          <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-aqua" />
+          {place}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function Segments() {
+  const { residential, commercial } = segments;
+
+  return (
+    <section id="residencial-comercial" aria-labelledby="segmentos-title" className="bg-white py-20 sm:py-24 lg:py-32">
       <Container>
         <SectionHeading id="segmentos-title" eyebrow={segments.eyebrow} title={segments.title} />
 
-        <div className="mt-10 grid gap-5 lg:mt-12 lg:grid-cols-2 lg:gap-6">
-          {segments.items.map((item) => {
-            const dark = item.segment === "Comercial";
-            return (
-              <article
-                key={item.segment}
-                className={`reveal relative overflow-hidden rounded-3xl p-6 sm:p-9 ${
-                  dark ? "bg-navy text-white" : "border border-line bg-mist text-navy"
-                }`}
-              >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 200 200"
-                  className={`pointer-events-none absolute -right-16 -top-16 h-56 w-56 ${dark ? "text-white/[0.06]" : "text-aqua/20"}`}
-                >
-                  <circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <circle cx="100" cy="100" r="68" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <circle cx="100" cy="100" r="38" fill="none" stroke="currentColor" strokeWidth="2" />
-                </svg>
+        {/* Residencial */}
+        <article aria-labelledby="residencial-title" className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:items-end lg:gap-14">
+          <figure className="reveal relative -mx-4 aspect-[4/3] sm:mx-0 lg:col-span-7 lg:aspect-[7/6]">
+            <Photo photo={photos.residential} sizes="(min-width: 1024px) 55vw, 100vw" className="sm:rounded-2xl" />
+          </figure>
+          <div className="lg:col-span-5 lg:pb-4">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-aqua-ink">{residential.segment}</p>
+            <h3 id="residencial-title" className="mt-4 text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-[-0.02em] text-navy sm:text-4xl">
+              {residential.title}
+            </h3>
+            <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-muted">{residential.text}</p>
+            <Places items={residential.places} />
+            <p className="mt-6 text-sm leading-relaxed text-muted">{residential.note}</p>
+            <QuoteButton
+              segment={residential.segment}
+              className={buttonClasses({ variant: "primary", size: "lg", className: "mt-8 w-full sm:w-auto" })}
+            >
+              {residential.cta}
+              <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2.25} />
+            </QuoteButton>
+          </div>
+        </article>
 
-                <div className="relative">
-                  <p
-                    className={`inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] ${
-                      dark ? "text-aqua" : "text-aqua-ink"
-                    }`}
-                  >
-                    <Icon name={item.icon} className="h-5 w-5" />
-                    {item.segment}
-                  </p>
-                  <h3 className="mt-4 text-2xl font-bold tracking-tight sm:text-[1.75rem]">{item.title}</h3>
-                  <p className={`mt-3 max-w-md leading-relaxed ${dark ? "text-on-dark" : "text-muted"}`}>{item.text}</p>
-
-                  <ul className="mt-6 flex flex-wrap gap-2" aria-label={`Ambientes ${item.segment.toLowerCase()}`}>
-                    {item.places.map((place) => (
-                      <li
-                        key={place}
-                        className={`rounded-full px-3.5 py-1.5 text-sm font-medium ${
-                          dark ? "bg-white/8 text-white ring-1 ring-white/12" : "bg-white text-navy ring-1 ring-line"
-                        }`}
-                      >
-                        {place}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <QuoteButton
-                    segment={item.segment}
-                    className={buttonClasses({
-                      variant: dark ? "accent" : "primary",
-                      className: "mt-8 w-full min-[400px]:w-auto",
-                    })}
-                  >
-                    {item.cta}
-                    <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2.25} />
-                  </QuoteButton>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        {/* Comercial: bloco escuro sobreposto à foto no desktop */}
+        <article aria-labelledby="comercial-title" className="relative mt-20 lg:mt-32 lg:grid lg:grid-cols-12 lg:items-center">
+          <figure className="reveal relative -mx-4 aspect-[4/3] sm:mx-0 lg:col-span-8 lg:col-start-5 lg:row-start-1 lg:aspect-[16/11]">
+            <Photo photo={photos.commercial} sizes="(min-width: 1024px) 65vw, 100vw" className="sm:rounded-2xl" />
+          </figure>
+          <div className="relative -mx-4 bg-navy px-5 py-10 text-white sm:mx-0 sm:-mt-16 sm:ml-8 sm:rounded-2xl sm:p-10 lg:col-span-6 lg:col-start-1 lg:row-start-1 lg:m-0 lg:p-12">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-aqua">{commercial.segment}</p>
+            <h3 id="comercial-title" className="mt-4 text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-4xl">
+              {commercial.title}
+            </h3>
+            <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-on-dark">{commercial.text}</p>
+            <Places items={commercial.places} dark />
+            <p className="mt-6 text-sm leading-relaxed text-on-dark">{commercial.note}</p>
+            <QuoteButton
+              segment={commercial.segment}
+              className={buttonClasses({ variant: "accent", size: "lg", className: "mt-8 w-full sm:w-auto" })}
+            >
+              {commercial.cta}
+              <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2.25} />
+            </QuoteButton>
+          </div>
+        </article>
       </Container>
     </section>
   );

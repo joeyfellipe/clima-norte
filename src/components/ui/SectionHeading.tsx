@@ -1,3 +1,16 @@
+/** Evita quebrar palavras compostas no hífen (ex.: "ar-condicionado"). */
+export function keepHyphenated(text: string) {
+  return text.split(/(S+-S+)/).map((part, i) =>
+    i % 2 ? (
+      <span key={i} className="whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 type SectionHeadingProps = {
   id?: string;
   eyebrow: string;
@@ -7,6 +20,19 @@ type SectionHeadingProps = {
   align?: "left" | "center";
   className?: string;
 };
+
+export function Eyebrow({ children, tone = "light" }: { children: string; tone?: "light" | "dark" }) {
+  return (
+    <p
+      className={`flex items-center gap-3 text-[0.8125rem] font-bold uppercase tracking-[0.16em] ${
+        tone === "dark" ? "text-aqua" : "text-aqua-ink"
+      }`}
+    >
+      <span aria-hidden="true" className="h-px w-8 bg-current" />
+      {children}
+    </p>
+  );
+}
 
 export function SectionHeading({
   id,
@@ -19,20 +45,18 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   const dark = tone === "dark";
   return (
-    <div className={`${align === "center" ? "mx-auto text-center" : ""} max-w-2xl ${className}`}>
-      <p
-        className={`text-sm font-semibold uppercase tracking-[0.14em] ${dark ? "text-aqua" : "text-aqua-ink"}`}
-      >
-        {eyebrow}
-      </p>
+    <div className={`${align === "center" ? "mx-auto text-center [&>p:first-child]:justify-center" : ""} max-w-3xl ${className}`}>
+      <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
       <h2
         id={id}
-        className={`mt-3 text-balance text-[1.75rem] font-bold leading-tight tracking-tight sm:text-4xl ${dark ? "text-white" : "text-navy"}`}
+        className={`mt-5 text-balance text-[2rem] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[2.75rem] lg:text-[3.25rem] ${
+          dark ? "text-white" : "text-navy"
+        }`}
       >
-        {title}
+        {keepHyphenated(title)}
       </h2>
       {intro && (
-        <p className={`mt-4 text-pretty text-base leading-relaxed sm:text-lg ${dark ? "text-on-dark" : "text-muted"}`}>
+        <p className={`mt-5 max-w-2xl text-pretty text-[1.0625rem] leading-relaxed sm:text-lg ${dark ? "text-on-dark" : "text-muted"}`}>
           {intro}
         </p>
       )}

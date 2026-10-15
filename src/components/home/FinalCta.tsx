@@ -1,46 +1,40 @@
 import { finalCta } from "@/content/home";
+import { photos } from "@/content/photos";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
+import { Photo } from "@/components/ui/Photo";
 import { buttonClasses } from "@/components/ui/button";
 import { QuoteButton } from "@/components/quote/QuoteButton";
 
 export function FinalCta() {
   return (
-    <section id="contato" aria-labelledby="contato-title" className="bg-white pb-16 sm:pb-20 lg:pb-24">
-      <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-navy px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 600 300"
-            preserveAspectRatio="xMaxYMid slice"
-            className="pointer-events-none absolute inset-0 h-full w-full text-aqua/15"
-          >
-            <path d="M200 260c80-60 160-60 240 0s120 40 160 10" fill="none" stroke="currentColor" strokeWidth="2" />
-            <path d="M240 220c80-60 160-60 240 0s80 30 120 10" fill="none" stroke="currentColor" strokeWidth="2" />
-            <path d="M280 180c80-60 160-60 240 0s50 20 80 10" fill="none" stroke="currentColor" strokeWidth="2" />
-            <circle cx="560" cy="40" r="120" fill="none" stroke="currentColor" strokeWidth="2" />
-          </svg>
+    <section id="contato" aria-labelledby="contato-title" className="relative isolate overflow-hidden bg-navy text-white">
+      <Photo photo={photos.rooftop} sizes="100vw" className="-z-10" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-navy/75 lg:bg-linear-to-r lg:from-navy lg:from-25% lg:via-navy/70 lg:to-navy/10" />
 
-          <div className="relative max-w-2xl">
-            <h2 id="contato-title" className="text-balance text-[1.75rem] font-bold leading-tight tracking-tight text-white sm:text-4xl">
-              {finalCta.title}
-            </h2>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-on-dark sm:text-lg">{finalCta.text}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <QuoteButton className={buttonClasses({ variant: "accent", size: "lg" })}>
-                {finalCta.cta}
-                <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2.25} />
-              </QuoteButton>
-              <a
-                href={buildWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={buttonClasses({ variant: "outlineDark", size: "lg" })}
-              >
-                <Icon name="whatsapp" /> Falar no WhatsApp
-              </a>
-            </div>
+      <Container className="py-24 sm:py-28 lg:py-36">
+        <div className="max-w-2xl">
+          <h2
+            id="contato-title"
+            className="text-balance text-[2rem] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[2.75rem] lg:text-[3.5rem]"
+          >
+            {finalCta.title}
+          </h2>
+          <p className="mt-6 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-on-dark sm:text-lg">{finalCta.text}</p>
+          <div className="mt-10 flex flex-col gap-3 min-[480px]:flex-row">
+            <QuoteButton className={buttonClasses({ variant: "accent", size: "lg" })}>
+              {finalCta.cta}
+              <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2.25} />
+            </QuoteButton>
+            <a
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses({ variant: "outlineDark", size: "lg" })}
+            >
+              <Icon name="whatsapp" /> {finalCta.whatsapp}
+            </a>
           </div>
         </div>
       </Container>

@@ -1,11 +1,15 @@
 import { siteConfig } from "@/config/site";
-import { services } from "@/content/home";
+import { serviceLabels } from "@/content/home";
 import { Hero } from "@/components/home/Hero";
+import { Intro } from "@/components/home/Intro";
 import { Services } from "@/components/home/Services";
+import { Diagnosis } from "@/components/home/Diagnosis";
 import { Segments } from "@/components/home/Segments";
-import { Differentials } from "@/components/home/Differentials";
+import { Estimate } from "@/components/home/Estimate";
 import { HowItWorks } from "@/components/home/HowItWorks";
-import { Regions } from "@/components/home/Regions";
+import { Brands } from "@/components/home/Brands";
+import { Region } from "@/components/home/Region";
+import { Technical } from "@/components/home/Technical";
 import { Faq } from "@/components/home/Faq";
 import { FinalCta } from "@/components/home/FinalCta";
 
@@ -17,26 +21,33 @@ const jsonLd = {
   description: siteConfig.description,
   url: siteConfig.url,
   areaServed: siteConfig.serviceArea.map((name) => ({ "@type": "Place", name })),
-  makesOffer: services.items.slice(0, 5).map((s) => ({
-    "@type": "Offer",
-    itemOffered: { "@type": "Service", name: s.title },
-  })),
+  makesOffer: [
+    serviceLabels.installation,
+    serviceLabels.preventive,
+    serviceLabels.cleaning,
+    serviceLabels.corrective,
+    serviceLabels.pmoc,
+  ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 
 export default function HomePage() {
   return (
     <main id="conteudo">
       <Hero />
+      <Intro />
       <Services />
+      <Diagnosis />
       <Segments />
-      <Differentials />
+      <Estimate />
       <HowItWorks />
-      <Regions />
+      <Brands />
+      <Region />
+      <Technical />
       <Faq />
       <FinalCta />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\u003c") }}
       />
     </main>
   );
