@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0b1f33;
+  --color-navy-700: #16324d;
+  --color-navy-900: #071524;
+  --color-aqua: #39bceb;
+  --color-aqua-300: #6fcff1;
+  /* Ciano escurecido para texto sobre fundo claro (contraste AA). */
+  --color-aqua-ink: #1677a0;
+  --color-mist: #f4f7fa;
+  --color-line: #e2e9f0;
+  --color-muted: #4a5b6c;
+  --color-on-dark: #b8c6d4;
+  --color-whatsapp: #25d366;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-navy);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-aqua) 30%, transparent);
+}
+
+/* ---------- Modal de orçamento ---------- */
+.quote-dialog::backdrop {
+  background: rgb(11 31 51 / 0.55);
+}
+
+html:has(.quote-dialog[open]) {
+  overflow: hidden;
+}
+
+html:has(.quote-dialog[open]) .whatsapp-float {
+  display: none;
+}
+
+.select-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5B6C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 1.1rem;
+  padding-right: 2.75rem;
+}
+
+/* No mobile, o botão flutuante só aparece após rolar, para não cobrir os CTAs do hero. */
+@keyframes float-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  @supports (animation-timeline: scroll()) {
+    .whatsapp-float {
+      animation: float-in linear both;
+      animation-timeline: scroll(root);
+      animation-range: 160px 320px;
+    }
+  }
+}
+
+/* ---------- Animações leves (somente sem reduced-motion) ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes airflow {
+  to {
+    stroke-dashoffset: -64;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.airflow-line {
+  stroke-dasharray: 6 10;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .fade-up {
+    animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .airflow-line {
+    animation: airflow 4s linear infinite;
+  }
+
+  .airflow-line--slow {
+    animation-duration: 6s;
+  }
+
+  .quote-dialog[open] {
+    animation: fade-up 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Revelação ao rolar sem JavaScript; navegadores sem suporte mostram o conteúdo normalmente. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}

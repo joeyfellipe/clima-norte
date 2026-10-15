@@ -1,0 +1,33 @@
+# dependências
+/node_modules
+/.pnp
+.pnp.*
+
+# build / Next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# ambiente (mantém apenas exemplos)
+.env*
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# deploy
+.vercel
+
+# sistema / editores / configurações locais
+.DS_Store
+Thumbs.db
+desktop.ini
+*.pem
+.idea/
+.vscode/
+.claude/settings.local.json
