@@ -1,6 +1,6 @@
 /** Evita quebrar palavras compostas no hífen (ex.: "ar-condicionado"). */
 export function keepHyphenated(text: string) {
-  return text.split(/(S+-S+)/).map((part, i) =>
+  return text.split(/(\S+-\S+)/).map((part, i) =>
     i % 2 ? (
       <span key={i} className="whitespace-nowrap">
         {part}
